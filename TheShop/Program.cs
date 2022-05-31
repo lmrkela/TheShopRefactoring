@@ -10,12 +10,19 @@ namespace TheShop
 
 			try
 			{
-				//order and sell
-				shopService.OrderAndSellArticle(1, 500, 10);
+				//order and sell				
+                if (shopService.OrderAndSellArticle(1, 500, 10))
+                {
+					Console.WriteLine("Article successfully ordered and sold.");					
+                }
+                else
+                {
+					Console.WriteLine("There is no article with entered ID and maximum price.");
+				}
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
-				Console.WriteLine(ex);
+				Console.WriteLine("Coudn't save article.");				
 			}
 
 			try
@@ -24,9 +31,9 @@ namespace TheShop
 				var article = shopService.GetById(1);
 				Console.WriteLine("Found article with ID: " + article.ID);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
-				Console.WriteLine("Article not found: " + ex);
+				Console.WriteLine("Article is not found.");
 			}
 
 			try
@@ -35,9 +42,9 @@ namespace TheShop
 				var article = shopService.GetById(12);
 				Console.WriteLine("Found article with ID: " + article.ID);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
-				Console.WriteLine("Article not found: " + ex);
+				Console.WriteLine("Article is not found.");
 			}
 
 			Console.ReadKey();

@@ -84,7 +84,7 @@ namespace TheShopTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void ArticleOrderAndSold_OrderProblem()
         {
             ShopService sup = new ShopService();
