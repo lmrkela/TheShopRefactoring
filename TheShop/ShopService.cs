@@ -6,57 +6,22 @@ namespace TheShop
 	{
 		private DatabaseDriver DatabaseDriver;
 		private Logger logger;
+		private SuppliersService suppliers;
 
-		private Supplier1 Supplier1;
-		private Supplier2 Supplier2;
-		private Supplier3 Supplier3;
-		
+
 		public ShopService()
 		{
 			DatabaseDriver = new DatabaseDriver();
 			logger = new Logger();
-			Supplier1 = new Supplier1();
-			Supplier2 = new Supplier2();
-			Supplier3 = new Supplier3();
+			suppliers = new SuppliersService();
 		}
 
 		public void OrderAndSellArticle(int id, int maxExpectedPrice, int buyerId)
 		{
-			#region ordering article
-
-			Article article = null;
-			Article tempArticle = null;
-			var articleExists = Supplier1.ArticleInInventory(id);
-			if (articleExists)
-			{
-				tempArticle = Supplier1.GetArticle(id);
-				if (maxExpectedPrice < tempArticle.ArticlePrice)
-				{
-					articleExists = Supplier2.ArticleInInventory(id);
-					if (articleExists)
-					{
-						tempArticle = Supplier2.GetArticle(id);
-						if (maxExpectedPrice < tempArticle.ArticlePrice)
-						{
-							articleExists = Supplier3.ArticleInInventory(id);
-							if (articleExists)
-							{
-								tempArticle = Supplier3.GetArticle(id);
-								if (maxExpectedPrice < tempArticle.ArticlePrice)
-								{
-									article = tempArticle;
-								}
-							}
-						}
-					}
-				}
-			}
-			
-			article = tempArticle;
-			#endregion
-
-			#region selling article
-
+						
+			Article article = suppliers.OrderArticle(id, maxExpectedPrice);
+		
+					
 			if (article == null)
 			{
 				throw new Exception("Could not order article");
@@ -72,6 +37,7 @@ namespace TheShop
 			{
 				DatabaseDriver.Save(article);
 				logger.Info("Article with id=" + id + " is sold.");
+				
 			}
 			catch (ArgumentNullException ex)
 			{
@@ -80,9 +46,7 @@ namespace TheShop
 			}
 			catch (Exception)
 			{
-			}
-
-			#endregion
+			}			
 		}
 
 		public Article GetById(int id)
