@@ -1,18 +1,19 @@
 ﻿using System;
+using log4net;
 
 namespace TheShop
 {
     public class ShopService
 	{
-		private DatabaseDriver DatabaseDriver;
-		private Logger logger;
+		private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+		private DatabaseDriver DatabaseDriver;		 
 		private SuppliersService suppliers;
 
 
 		public ShopService()
 		{
-			DatabaseDriver = new DatabaseDriver();
-			logger = new Logger();
+			log4net.Config.XmlConfigurator.Configure();
+			DatabaseDriver = new DatabaseDriver();			 
 			suppliers = new SuppliersService();
 		}
 
@@ -33,9 +34,13 @@ namespace TheShop
 			if (article == null)
 			{
 				return false;
+            }
+            else
+            {
+				Logger.Debug("Article with id=" + id + " is found.");
 			}
 
-			logger.Debug("Trying to sell article with id=" + id);
+			Logger.Debug("Trying to sell article with id=" + id);
 									
 			try
 			{
@@ -43,12 +48,12 @@ namespace TheShop
 				article.IsSold = true;
 				article.SoldDate = DateTime.Now;
 				article.BuyerUserId = buyerId;
-				logger.Info("Article with id=" + id + " is sold.");
+				Logger.Info("Article with id=" + id + " is sold.");
 				
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
-				logger.Error("Could not save article with id=" + id);
+				Logger.Error("Could not save article with id=" + id, ex);
 				throw;
 			}
 
@@ -63,7 +68,7 @@ namespace TheShop
 				return DatabaseDriver.GetById(id);
 			} catch (Exception ex)
             {
-				logger.Error("Coudn't find article with id=" + id + " " + ex);
+				Logger.Error("Coudn't find article with id=" + id + " ", ex);
 				throw ;
             }
 		}
