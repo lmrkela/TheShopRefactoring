@@ -36,7 +36,12 @@ namespace TheShop
 			});
 		}
 
-		public Article OrderArticle(int id, int maxExpectedPrice)
+		public SuppliersService(List<Supplier> supliers)
+		{
+			_suppliers = supliers;
+		}
+
+			public Article OrderArticle(int id, int maxExpectedPrice)
         {
 			foreach(Supplier s in _suppliers)
             {
@@ -53,28 +58,29 @@ namespace TheShop
 			return null;
         }
 
-		private class Supplier
-		{
-			private List<Article> _inventory = new List<Article>();
-
-			public bool ArticleInInventory(int id)
-			{
-				return true;
-			}
-			public Article GetArticle(int id)
-			{
-				return _inventory.Single(x => x.ID == id);
-			}
-
-			public void AddArticle(Article a)
-			{
-				_inventory.Add(a);
-			}
-		}
+		
 
 	}
+	public class Supplier
+	{
+		private List<Article> _inventory = new List<Article>();
 
-	
+		public bool ArticleInInventory(int id)
+		{
+			return _inventory.Exists(x => x.ID == id);
+		}
+		public Article GetArticle(int id)
+		{
+			return _inventory.Single(x => x.ID == id);
+		}
+
+		public void AddArticle(Article a)
+		{
+			_inventory.Add(a);
+		}
+	}
+
+
 
 
 }
