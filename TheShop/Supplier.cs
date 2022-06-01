@@ -7,7 +7,7 @@ namespace TheShop
 	{
 		private List<Article> _inventory = new List<Article>();
 
-		public bool ArticleInInventory(int id)
+		public bool IsArticleInInventory(int id)
 		{
 			return _inventory.Exists(x => x.ID == id);
 		}

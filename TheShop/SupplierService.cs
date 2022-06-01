@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 namespace TheShop
 {
 
-    public class SuppliersService
+    public class SupplierService
     {
 		private List<Supplier> _suppliers = new List<Supplier>();
-        public SuppliersService()
+        public SupplierService()
         {
 			 
 			_suppliers.Add(new Supplier());
@@ -18,36 +18,37 @@ namespace TheShop
 			_suppliers[0].AddArticle(new Article()
 			{
                 ID = 1,
-                Name_of_article = "Article from supplier1",
-				ArticlePrice = 458
+                Name = "Article from supplier1",
+				Price = 458
 			});
 			_suppliers[1].AddArticle(new Article()
 			{
 				ID = 1,
-				Name_of_article = "Article from supplier2",
-				ArticlePrice = 459
+				Name = "Article from supplier2",
+				Price = 459
 			});
 			_suppliers[2].AddArticle(new Article()
 			{
 				ID = 1,
-				Name_of_article = "Article from supplier3",
-				ArticlePrice = 460
+				Name = "Article from supplier3",
+				Price = 460
 			});
 		}
 
-		public SuppliersService(List<Supplier> supliers)
+		public SupplierService(List<Supplier> supliers)
 		{
 			_suppliers = supliers;
 		}
 
-			public Article OrderArticle(int id, int maxExpectedPrice)
+
+		public Article OrderArticle(int id, int maxExpectedPrice)
         {
 			foreach(Supplier s in _suppliers)
             {
-				if(s.ArticleInInventory(id))
+				if(s.IsArticleInInventory(id))
                 {
 					Article article = s.GetArticle(id);
-					if(article.ArticlePrice <= maxExpectedPrice)
+					if(article.Price <= maxExpectedPrice)
                     {
 						return article;
                     }

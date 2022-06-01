@@ -12,7 +12,7 @@ namespace TheShopTests
         [TestMethod]
         public void ArticleOrder_NotFound_ID()
         {
-            SuppliersService sup = new SuppliersService();
+            SupplierService sup = new SupplierService();
 
             var article = sup.OrderArticle(20, 1000);
 
@@ -22,7 +22,7 @@ namespace TheShopTests
         [TestMethod]
         public void ArticleOrder_NotFound_Price()
         {
-            SuppliersService sup = new SuppliersService();
+            SupplierService sup = new SupplierService();
 
             var article = sup.OrderArticle(1, 300);
 
@@ -32,12 +32,12 @@ namespace TheShopTests
         [TestMethod]
         public void ArticleOrder_NotFound_PriceBoundary()
         {
-            SuppliersService sup = new SuppliersService();
+            SupplierService sup = new SupplierService();
 
             var article = sup.OrderArticle(1, 458);
 
             Assert.IsNotNull(article);
-            Assert.AreEqual(458, article.ArticlePrice);
+            Assert.AreEqual(458, article.Price);
 
         }
 
@@ -50,19 +50,19 @@ namespace TheShopTests
             Article article1 = new Article()
             {
                 ID = 1,               
-                ArticlePrice = 500
+                Price = 500
             };
 
             Article article2 = new Article()
             {
                 ID = 1,              
-                ArticlePrice = 458
+                Price = 458
             };
 
             Article article3 = new Article()
             {
                 ID = 1,              
-                ArticlePrice = 300
+                Price = 300
             };
 
             Supplier supplier1 = new Supplier();
@@ -76,7 +76,7 @@ namespace TheShopTests
             suppliers.Add(supplier2);
             suppliers.Add(supplier3);
 
-            SuppliersService sup = new SuppliersService(suppliers);
+            SupplierService sup = new SupplierService(suppliers);
 
             var article = sup.OrderArticle(1, 460);
                         

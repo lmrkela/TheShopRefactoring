@@ -6,15 +6,15 @@ namespace TheShop
     public class ShopService
 	{
 		private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-		private DatabaseDriver DatabaseDriver;		 
-		private SuppliersService suppliers;
+		private DatabaseDriver databaseDriver;		 
+		private SupplierService supplierService;
 
 
 		public ShopService()
 		{
 			log4net.Config.XmlConfigurator.Configure();
-			DatabaseDriver = new DatabaseDriver();			 
-			suppliers = new SuppliersService();
+			databaseDriver = new DatabaseDriver();			 
+			supplierService = new SupplierService();
 		}
 
 		/// <summary>
@@ -28,7 +28,7 @@ namespace TheShop
 		public bool OrderAndSellArticle(int id, int maxExpectedPrice, int buyerId)
 		{
 						
-			Article article = suppliers.OrderArticle(id, maxExpectedPrice);
+			Article article = supplierService.OrderArticle(id, maxExpectedPrice);
 		
 					
 			if (article == null)
@@ -59,7 +59,7 @@ namespace TheShop
 		public void SellArticle(Article article,int buyerId)
         {
 			Logger.Debug("Trying to sell article with id=" + article.ID);
-			DatabaseDriver.Save(article);
+			databaseDriver.Save(article);
 			article.IsSold = true;
 			article.SoldDate = DateTime.Now;
 			article.BuyerUserId = buyerId;
@@ -70,7 +70,7 @@ namespace TheShop
 		{
 			try
 			{
-				return DatabaseDriver.GetById(id);
+				return databaseDriver.GetById(id);
 			} catch (Exception ex)
             {
 				Logger.Error("Coudn't find article with id=" + id + " ", ex);
