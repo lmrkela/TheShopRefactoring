@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace TheShop
 {
 
-    public class SupplierService
+    public class SupplierService : ISupplierService
     {
 		private List<Supplier> _suppliers = new List<Supplier>();
         public SupplierService()

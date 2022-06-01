@@ -6,8 +6,8 @@ namespace TheShop
     public class ShopService
 	{
 		private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-		private DatabaseDriver databaseDriver;		 
-		private SupplierService supplierService;
+		private IDatabaseDriver databaseDriver;		 
+		private ISupplierService supplierService;
 
 
 		public ShopService()
