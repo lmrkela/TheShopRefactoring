@@ -30,6 +30,19 @@ namespace TheShopTests
         }
 
         [TestMethod]
+        public void ArticleOrder_NotFound_PriceBoundary()
+        {
+            SuppliersService sup = new SuppliersService();
+
+            var article = sup.OrderArticle(1, 458);
+
+            Assert.IsNotNull(article);
+            Assert.AreEqual(458, article.ArticlePrice);
+
+        }
+
+
+        [TestMethod]
         public void ArticleOrder_Found()
         {
             List<Supplier> suppliers = new List<Supplier>();
@@ -91,6 +104,16 @@ namespace TheShopTests
 
             sup.OrderAndSellArticle(3, 500, 5);
             sup.GetById(3);            
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ArticleOrderAndSold_OrderProblem2()
+        {
+            ShopService sup = new ShopService();
+
+            sup.OrderAndSellArticle(1, 500, 5);
+            sup.GetById(3);
         }
 
     }
