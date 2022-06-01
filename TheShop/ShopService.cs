@@ -39,17 +39,12 @@ namespace TheShop
             {
 				Logger.Debug("Article with id=" + id + " is found.");
 			}
-
-			Logger.Debug("Trying to sell article with id=" + id);
+			
 									
 			try
 			{
-				DatabaseDriver.Save(article);
-				article.IsSold = true;
-				article.SoldDate = DateTime.Now;
-				article.BuyerUserId = buyerId;
-				Logger.Info("Article with id=" + id + " is sold.");
-				
+				SellArticle(article, buyerId);
+
 			}
 			catch (Exception ex)
 			{
@@ -59,6 +54,16 @@ namespace TheShop
 
 			return true;
 				
+		}
+
+		public void SellArticle(Article article,int buyerId)
+        {
+			Logger.Debug("Trying to sell article with id=" + article.ID);
+			DatabaseDriver.Save(article);
+			article.IsSold = true;
+			article.SoldDate = DateTime.Now;
+			article.BuyerUserId = buyerId;
+			Logger.Info("Article with id=" + article.ID + " is sold.");
 		}
 
 		public Article GetById(int id)
