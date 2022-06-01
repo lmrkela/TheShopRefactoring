@@ -56,6 +56,11 @@ namespace TheShop
 				
 		}
 
+		/// <summary>
+		/// Sells article and sets sold date and buyer user id 
+		/// </summary>
+		/// <param name="article"></param>
+		/// <param name="buyerId"></param>
 		public void SellArticle(Article article,int buyerId)
         {
 			Logger.Debug("Trying to sell article with id=" + article.ID);

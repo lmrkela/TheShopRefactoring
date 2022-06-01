@@ -40,7 +40,12 @@ namespace TheShop
 			_suppliers = supliers;
 		}
 
-
+		/// <summary>
+		/// Tries to find article with given id and price not exceeding given maxEpectedPrice
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="maxExpectedPrice"></param>
+		/// <returns>Article meeting given requirements, null otherwise.</returns>
 		public Article OrderArticle(int id, int maxExpectedPrice)
         {
 			foreach(Supplier s in _suppliers)
