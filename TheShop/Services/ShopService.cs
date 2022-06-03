@@ -6,15 +6,28 @@ namespace TheShop
     public class ShopService
 	{
 		private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-		private IDatabaseDriver databaseDriver;		 
-		private ISupplierService supplierService;
+		private IDatabaseDriver _databaseDriver;		 
+		private ISupplierService _supplierService;
 
 
 		public ShopService()
 		{
+			configureLogger();
+			_databaseDriver = new DatabaseDriver();			 
+			_supplierService = new SupplierService();
+		}
+
+		public ShopService(IDatabaseDriver databaseDriver, ISupplierService supplierService)
+		{
+			configureLogger();
+			_databaseDriver = databaseDriver;
+			_supplierService = supplierService;
+		}
+
+		private void configureLogger()
+        {
 			log4net.Config.XmlConfigurator.Configure();
-			databaseDriver = new DatabaseDriver();			 
-			supplierService = new SupplierService();
+			//Could be extended to include log files, levels, etc...
 		}
 
 		/// <summary>
@@ -28,7 +41,7 @@ namespace TheShop
 		public bool OrderAndSellArticle(int id, int maxExpectedPrice, int buyerId)
 		{
 						
-			Article article = supplierService.OrderArticle(id, maxExpectedPrice);
+			Article article = _supplierService.OrderArticle(id, maxExpectedPrice);
 		
 					
 			if (article == null)
@@ -64,7 +77,7 @@ namespace TheShop
 		public void SellArticle(Article article,int buyerId)
         {
 			Logger.Debug("Trying to sell article with id=" + article.ID);
-			databaseDriver.Save(article);
+			_databaseDriver.Save(article);
 			article.IsSold = true;
 			article.SoldDate = DateTime.Now;
 			article.BuyerUserId = buyerId;
@@ -75,7 +88,7 @@ namespace TheShop
 		{
 			try
 			{
-				return databaseDriver.GetById(id);
+				return _databaseDriver.GetById(id);
 			} catch (Exception ex)
             {
 				Logger.Error("Coudn't find article with id=" + id + " ", ex);

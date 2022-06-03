@@ -47,15 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Article.cs" />
-    <Compile Include="DatabaseDriver.cs" />
-    <Compile Include="IDatabaseDriver.cs" />
-    <Compile Include="ISupplierService.cs" />
+    <Compile Include="Model\Article.cs" />
+    <Compile Include="Drivers\DatabaseDriver.cs" />
+    <Compile Include="Interfaces\IDatabaseDriver.cs" />
+    <Compile Include="Interfaces\ISupplierService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShopService.cs" />
-    <Compile Include="Supplier.cs" />
-    <Compile Include="SupplierService.cs" />
+    <Compile Include="Services\ShopService.cs" />
+    <Compile Include="Model\Supplier.cs" />
+    <Compile Include="Services\SupplierService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -63,5 +63,6 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
