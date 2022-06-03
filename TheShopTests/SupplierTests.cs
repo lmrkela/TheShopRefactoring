@@ -1,13 +1,15 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TheShop;
 
 namespace TheShopTests
 {
-
     [TestClass]
-    public class TheShopTests
+    public class SupplierTests
     {
         [TestMethod]
         public void ArticleOrder_NotFound_ID()
@@ -46,22 +48,22 @@ namespace TheShopTests
         public void ArticleOrder_Found()
         {
             List<Supplier> suppliers = new List<Supplier>();
-           
+
             Article article1 = new Article()
             {
-                ID = 1,               
+                ID = 1,
                 Price = 500
             };
 
             Article article2 = new Article()
             {
-                ID = 1,              
+                ID = 1,
                 Price = 458
             };
 
             Article article3 = new Article()
             {
-                ID = 1,              
+                ID = 1,
                 Price = 300
             };
 
@@ -79,42 +81,9 @@ namespace TheShopTests
             SupplierService sup = new SupplierService(suppliers);
 
             var article = sup.OrderArticle(1, 460);
-                        
+
             Assert.IsNotNull(article);
             Assert.AreEqual(article2, article);
         }
-
-        [TestMethod]
-        public void ArticleOrderAndSold_Success()
-        {
-            ShopService sup = new ShopService();
-
-            sup.OrderAndSellArticle(1, 500, 5);
-            Article article = sup.GetById(1);
-
-            Assert.AreEqual(1, article.ID);
-            Assert.AreEqual(5, article.BuyerUserId);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void ArticleOrderAndSold_OrderProblem()
-        {
-            ShopService sup = new ShopService();
-
-            sup.OrderAndSellArticle(3, 500, 5);
-            sup.GetById(3);            
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void ArticleOrderAndSold_OrderProblem2()
-        {
-            ShopService sup = new ShopService();
-
-            sup.OrderAndSellArticle(1, 500, 5);
-            sup.GetById(3);
-        }
-
     }
 }
